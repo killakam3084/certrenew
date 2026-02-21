@@ -1,0 +1,8 @@
+services:
+  certrenew:
+    image: ghcr.io/killakam3084/certrenew:latest
+    container_name: certrenew
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/cell_block_d/apps/certrenew/config.json:/etc/certrenew/config.json:ro
+    restart: "no"
