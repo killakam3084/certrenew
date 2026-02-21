@@ -1,4 +1,0 @@
-certrenew
-config.json
-*.json
-!config.example.json
