@@ -20,5 +20,7 @@ RUN curl -1sLf 'https://artifacts-cli.infisical.com/setup.alpine.sh' | bash \
 WORKDIR /app
 
 COPY --from=builder /app/certrenew .
+COPY infisical-run.sh .
+RUN chmod +x infisical-run.sh
 
-ENTRYPOINT ["./certrenew"]
+ENTRYPOINT ["./infisical-run.sh"]
