@@ -2,6 +2,14 @@ services:
   certrenew:
     image: ghcr.io/killakam3084/certrenew:latest
     container_name: certrenew
+    entrypoint:
+      - infisical
+      - run
+      - --projectId=${INFISICAL_PROJECT_ID}
+      - --env=${INFISICAL_ENV:-prod}
+      - --
+      - ./certrenew
+    env_file: /mnt/cell_block_d/apps/certrenew/.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/cell_block_d/apps/certrenew/config.json:/etc/certrenew/config.json:ro

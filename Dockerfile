@@ -11,7 +11,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o certrenew ./cmd/c
 
 FROM alpine:latest
 
-RUN apk --no-cache add ca-certificates tzdata docker-cli
+RUN apk --no-cache add ca-certificates tzdata docker-cli curl bash
+
+# Infisical CLI
+RUN curl -1sLf 'https://artifacts-cli.infisical.com/setup.alpine.sh' | bash \
+  && apk add --no-cache infisical
 
 WORKDIR /app
 

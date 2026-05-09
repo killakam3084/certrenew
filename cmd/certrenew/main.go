@@ -86,6 +86,15 @@ func loadConfig(path string) (*Config, error) {
 		return nil, fmt.Errorf("parsing config: %w", err)
 	}
 
+	// Overlay AWS credentials from environment — env takes precedence over config file.
+	// Secrets are injected via Infisical CLI: `infisical run -- ./certrenew`
+	if v := os.Getenv("AWS_ACCESS_KEY_ID"); v != "" {
+		cfg.AWSAccessKeyID = v
+	}
+	if v := os.Getenv("AWS_SECRET_ACCESS_KEY"); v != "" {
+		cfg.AWSSecretKey = v
+	}
+
 	return &cfg, nil
 }
 
@@ -100,10 +109,10 @@ func validate(cfg *Config) error {
 		return fmt.Errorf("nginx_container is required")
 	}
 	if cfg.AWSAccessKeyID == "" {
-		return fmt.Errorf("aws_access_key_id is required")
+		return fmt.Errorf("AWS_ACCESS_KEY_ID must be set (env var or aws_access_key_id in config)")
 	}
 	if cfg.AWSSecretKey == "" {
-		return fmt.Errorf("aws_secret_access_key is required")
+		return fmt.Errorf("AWS_SECRET_ACCESS_KEY must be set (env var or aws_secret_access_key in config)")
 	}
 	return nil
 }
