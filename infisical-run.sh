@@ -7,3 +7,4 @@ exec infisical run \
   --projectId="${INFISICAL_PROJECT_ID}" \
   --env="${INFISICAL_ENV:-prod}" \
   -- ./certrenew "$@"
+
