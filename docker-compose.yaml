@@ -8,6 +8,7 @@ services:
       - --projectId=${INFISICAL_PROJECT_ID}
       - --env=${INFISICAL_ENV:-prod}
       - --
+    command:
       - ./certrenew
     env_file: /mnt/cell_block_d/apps/certrenew/.env
     volumes:
