@@ -61,7 +61,7 @@ func main() {
 	}
 
 	if cfg.Domain != "" {
-		if err := verifyCert(cfg.Domain, defaultVerifyPort); err != nil {
+		if err := verifyCert(cfg.Domain, "127.0.0.1", defaultVerifyPort); err != nil {
 			log.Printf("WARNING: cert verification failed: %v", err)
 		}
 	}
@@ -158,9 +158,9 @@ func restartNginx(cfg *Config) error {
 	return nil
 }
 
-func verifyCert(domain, port string) error {
-	addr := net.JoinHostPort(domain, port)
-	log.Printf("verifying certificate at %s", addr)
+func verifyCert(domain, dialHost, port string) error {
+	addr := net.JoinHostPort(dialHost, port)
+	log.Printf("verifying certificate at %s (SNI: %s)", addr, domain)
 
 	conn, err := tls.Dial("tcp", addr, &tls.Config{
 		ServerName: domain,
